@@ -78,9 +78,13 @@
                 min-width: 32px;
                 text-align: center;
                 padding: 7px 0;
-                border: lightgreen solid 1px;
+                // border: lightgreen solid 1px;
                 border-radius: 50%;
                 margin: 2px 0;
+                &:active{
+                    background-color: @darkblue;
+                    color: white;
+                }
             }
             .weekday{
                 padding-top: 10px;
@@ -99,6 +103,7 @@
 
         .foldMarker{
             text-align: center;
+            padding: 6px;
             div{
                 svg{
                     width: 10px;
@@ -116,6 +121,7 @@
             font-size: 12px;
             font-weight: bold;
             box-shadow: 0 0 3px 0px #AFAAA7;
+            margin-bottom: 3px;
             span.selected{
                 color: @darkblue;
                 position: relative;
@@ -141,13 +147,50 @@
 
         .events-wrapper{
             .events{
-                overflow: auto;
-                height: 200px;
-                background-color: gray;
+                overflow: hidden;
                 .event{
-                    height: 40px;
-                    background-color: rgb(236, 236, 236);
-                    border: #504e51 solid 1px;
+                    border-bottom: #f0f0f0 solid 1px;
+                    display: flex;
+                    padding: 10px 5px 10px 20px;
+                    &:nth-child(2){
+                        .myrole{
+                            color: #FCB54E;
+                        }
+                    }
+                    &:nth-child(3){
+                        .myrole{
+                            color: #FCB54E;
+                        }
+                    }
+                    main{
+                        flex: 1;
+                        header{
+                            background-color: #fff;
+                            font-weight: bold;
+                        }
+                        .content{
+                            color: #C3C2C3;
+                            font-size: 12px;
+                        }
+                        .myrole{
+                            color: #82CBD7;
+                            font-size: 12px;
+                        }
+                        
+                    }
+
+                    .appendix{
+                        color: #C3C2C3;
+                        display: flex;
+                        flex-direction: column;
+                        .time{
+                            font-size: 12px;
+                            flex: 1;
+                        }
+                        .menu{
+                            text-align: right;
+                        }
+                    }
                 }
             }
         }

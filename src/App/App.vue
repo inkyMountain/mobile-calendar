@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" @touchstart='onAppTouchStart($event)' @touchend='onTouchEnd($event)'>
     <!------------------------Header------------------------->
     <header>
       <div class="statusBar">
@@ -22,71 +22,34 @@
         </span>
       </div>
       <div class="subStatus">
-        <div class="today">2017-9-14</div>
-        <div class="returnToToday" @click="test($event)">今天</div>
+        <!-- <div class="today">2017-9-14</div> -->
+        <div class="today">{{formatSelectedDay}}</div>
+        <div class="returnToToday" @click="dateReset($event)">今天</div>
       </div>
     </header>
 
     <!-----------------------Main------------------------>
-    <main>
-        <div class="row weekdays">
-          <span>日</span>
-          <span>一</span>
-          <span>二</span>
-          <span>三</span>
-          <span>四</span>
-          <span>五</span>
-          <span>六</span>
-        </div>
-        <div class="row day">
-          <span>1</span>
-          <span>1</span>
-          <span>1</span>
-          <span>1</span>
-          <span>1</span>
-          <span>1</span>
-          <span>1</span>
-        </div>
-        <div class="row day">
-          <span>2</span>
-          <span>2</span>
-          <span>2</span>
-          <span>2</span>
-          <span>2</span>
-          <span>2</span>
-          <span>2</span>
-        </div>
-        <div class="row day">
-          <span>3</span>
-          <span>3</span>
-          <span>3</span>
-          <span>3</span>
-          <span>3</span>
-          <span>3</span>
-          <span>3</span>
-        </div>
-        <div class="row day">
-          <span>4</span>
-          <span>4</span>
-          <span>4</span>
-          <span>4</span>
-          <span>4</span>
-          <span>4</span>
-          <span>4</span>
-        </div>
-        <div class="row day">
-          <span>5</span>
-          <span>5</span>
-          <span>5</span>
-          <span>5</span>
-          <span>5</span>
-          <span>5</span>
-          <span>5</span>
-        </div>
-        <div class="foldMarker">
-          <div>
-            <svg class="icon" aria-hidden="true">
+    <main @touchstart.stop="onMainTouchStart($event)" @touchmove.stop='' >
+      <div class="row weekdays">
+        <span>日</span>
+        <span>一</span>
+        <span>二</span>
+        <span>三</span>
+        <span>四</span>
+        <span>五</span>
+        <span>六</span>
+      </div>
+      <div class="row day" v-for="(row, index) in days" :key="index">
+        <span v-for="item in row" :key="item" @click="onDayClick($event)">{{item}}</span>
+      </div>
+
+        <div @click.stop="changeMode" class="foldMarker">
+          <div >
+            <svg class="icon" aria-hidden="true" v-if="viewMode === 'month'">
               <use xlink:href="#icon-shang"></use>
+            </svg>
+            <svg class="icon" aria-hidden="true" v-if="viewMode === 'week'">
+              <use xlink:href="#icon-xia"></use>
             </svg>
           </div>
         </div>
@@ -98,16 +61,19 @@
         <span>最后发言时间</span>
       </div>
       <div class="events-wrapper">
-        <div class="events">
-        <div class="event"></div>
-        <div class="event"></div>
-        <div class="event"></div>
-        <div class="event"></div>
-        <div class="event"></div>
-        <div class="event"></div>
-        <div class="event"></div>
-        <div class="event"></div>
-      </div>
+        <div class="events" :style="styleObject">
+          <article class="event" v-for="(event, index) in events" :key="index">
+            <main>
+              <header>{{event.title}}</header>
+              <div class="content">{{event.content}}</div>
+              <div class="myrole">{{event.myrole}}</div>
+            </main>
+            <div class="appendix">
+              <div class="time">{{event.time}}</div>
+              <div class="menu">...</div>
+            </div>
+          </article>
+        </div>
       </div>
     </section>
 
