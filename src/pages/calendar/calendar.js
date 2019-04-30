@@ -10,9 +10,9 @@ export default {
         startPoint: {},
         endPoint: {},
         startArea: undefined,
-        viewMode: 'week',
+        viewMode: 'month',
         // today: new Date(2018, 6, 1),
-        today: new Date(),
+        today: undefined,
         selectedDay: undefined,
         events: [
           {
@@ -163,7 +163,16 @@ export default {
           this.selectedDay = date
         },
         onMainTouchStart(event){
+          console.log('main start');
           this.startArea = 'main'
+          this.startPoint = {}
+          this.startPoint.x = event.changedTouches[0].clientX
+          this.startPoint.y = event.changedTouches[0].clientY
+        },
+        onAppTouchStart(event){
+          console.log('app start');
+          
+          this.startArea = 'app'
           this.startPoint = {}
           this.startPoint.x = event.changedTouches[0].clientX
           this.startPoint.y = event.changedTouches[0].clientY
@@ -177,17 +186,11 @@ export default {
             this.previous()
           }else if(length < 0 && (Math.abs(length) > Math.abs(height)) && this.startArea === 'main'){
             this.next()
-          }else if (height > 0 && (Math.abs(length) < Math.abs(height)) && this.startArea === 'app') {
+          }else if (height > 0 && (Math.abs(length) < Math.abs(height))) {
             this.viewMode = 'month'
-          }else if(height < 0 && (Math.abs(length) < Math.abs(height)) && this.startArea === 'app'){
+          }else if(height < 0 && (Math.abs(length) < Math.abs(height))){
             this.viewMode = 'week'
           }
-        },
-        onAppTouchStart(event){
-          this.startArea = 'app'
-          this.startPoint = {}
-          this.startPoint.x = event.changedTouches[0].clientX
-          this.startPoint.y = event.changedTouches[0].clientY
         },
         next(){  // 根据viewMode采取对应切换方法
           if (this.viewMode === 'month') {
@@ -210,9 +213,16 @@ export default {
             this.viewMode = 'month'
           }
         },
-        onDayClick(event){
-          event
+        onDayClick(event, item){
+          console.log(item, this.selectedDay);
+          let temp = this.selectedDay
+          console.log('year', temp.getFullYear());
+          console.log('month', temp.getMonth());
+          console.log('date',item);
+          
+          this.selectedDay = new Date(temp.getFullYear(), temp.getMonth(), item)
         },
+        doNothing(){},
     },
 
     // events部分高度动态计算
@@ -224,6 +234,8 @@ export default {
       
     },
     beforeMount(){
-      this.selectedDay = this.today
-    },
+      this.today = new Date()
+      this.selectedDay = new Date()
+      window.app = this
+    }
   }

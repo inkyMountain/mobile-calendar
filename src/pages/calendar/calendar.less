@@ -1,4 +1,4 @@
-@import '../assets/var.less';
+@import '../../assets/var.less';
 
 #app{
     // Header---------------------------------------------------------------
@@ -81,9 +81,16 @@
                 // border: lightgreen solid 1px;
                 border-radius: 50%;
                 margin: 2px 0;
-                &:active{
+                &.selected{
                     background-color: @darkblue;
                     color: white;
+                }
+                &.today{
+                    border: 1px solid @darkblue;
+                    &.selected{
+                        background-color: @darkblue;
+                        color: white;
+                    }
                 }
             }
             .weekday{
@@ -225,5 +232,17 @@
             }
         }
     }
-
+    
 }
+
+
+
+
+
+
+
+
+
+
+
+

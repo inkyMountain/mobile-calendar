@@ -29,7 +29,7 @@
     </header>
 
     <!-----------------------Main------------------------>
-    <main @touchstart.stop="onMainTouchStart($event)" @touchmove.stop='' >
+    <main @touchstart.stop="onMainTouchStart($event)" @touchmove.stop='doNothing'>
       <div class="row weekdays">
         <span>日</span>
         <span>一</span>
@@ -39,9 +39,15 @@
         <span>五</span>
         <span>六</span>
       </div>
-      <div class="row day" v-for="(row, index) in days" :key="index">
-        <span v-for="item in row" :key="item" @click="onDayClick($event)">{{item}}</span>
-      </div>
+      <!-- <transition name="fade"> -->
+        <div class="row day" v-for="(row, index) in days" :key="index">
+          <span v-for="item in row" :class="{
+              selected:selectedDay.getDate() === item, 
+              today: today.getDate() === item && today.getMonth() === selectedDay.getMonth() && today.getFullYear() === selectedDay.getFullYear()
+            }" 
+            :key="item" @click="onDayClick($event, item)">{{item}}</span>
+        </div>
+      <!-- </transition> -->
 
         <div @click.stop="changeMode" class="foldMarker">
           <div >
@@ -115,6 +121,6 @@
 
 
 
-<script src='./App.js'></script>
-<style lang="less" src='./App.less'></style>
-<style lang="less" src='../assets/reset.less'></style>
+<script src='./calendar.js'></script>
+<style lang="less" src='./calendar.less'></style>
+<style lang="less" src='../../assets/reset.less'></style>
