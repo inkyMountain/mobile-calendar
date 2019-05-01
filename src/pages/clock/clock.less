@@ -1,11 +1,167 @@
+@import '../../assets/reset.less';
+
+
+
+
 body{
     color: white;
-    background-color: black;
+    background-color: lightblue;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    h1{
-        color: lightblue;
+    article.clock{
+        width: 550px;
+        height: 550px;
+        .outer-border{
+            width: 100%;
+            height: 100%;
+            border: #ff1515 15px solid;
+            border-radius: 50%;
+            .inner-border{
+                border: #b70d0d 10px solid;
+                border-radius: 50%;
+                width: 100%;
+                height: 100%;
+                position: relative;
+                .panel{
+                    background-color: #fff;
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 50%;
+                    position: relative;
+                    .dotsOrLine{
+                        position: absolute;
+                        left: 50%;
+                    }
+                    .dot{
+                        width: 10px;
+                        height: 10px;
+                        background-color: #a3a3a3;
+                        border-radius: 50%;
+                        top: 5px;
+                        transform-origin: 50% 245px;
+                    }
+                    .line{
+                        width: 8px;
+                        height: 20px;
+                        background-color: #666665;
+                        transform-origin: 50% 250px;
+                    }
+                    .number{
+                        position: absolute;
+                        left: 50%;
+                        top: 20px;
+                        color: black;
+                        font-size: 50px;
+                        transform-origin: 50% 230px;
+                        .numberSixRotate{
+                            transform: rotate(180deg)
+                        }
+                    }
+                }
+
+                .pointer-wrapper{
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    transform: translateX(-50%) translateY(-50%);
+                    // border: red solid 20px;
+                    .rotateCenter{
+                        width: 30px;
+                        height: 30px;
+                        border-radius: 50%;
+                        background-color: #e9887a;
+                        &::before{
+                            content: '';
+                            display: block;
+                            width: 20px;
+                            height: 20px;
+                            background-color: #edb7af;
+                            border-radius: 50%;
+                            .absCenter();
+                        }
+                        .heart{
+                            .absCenter();
+                            width: 12px;
+                            height: 12px;
+                            background-color: #a53128;
+                            border-radius: 50%;
+                            overflow: hidden;
+                            &::before{
+                                content: '';
+                                display: block;
+                                width: 80px;
+                                height: 20px;
+                                position: absolute;
+                                border-radius: 50%;
+                                right: 0.5px;
+                                bottom: -2px;
+                                background-color: #c44a3d;
+                            }
+                        }
+                    }
+
+                    .pointer{
+                        .hour{
+                            .pointer-mixin();
+                            width: 10px;
+                            height: 100px;
+                            background-color: #666665;
+                            transform: translateX(-50%) rotate(90deg);
+                        }
+                        .minute{
+                            .pointer-mixin();
+                            height: 150px;
+                            width: 10px;
+                            background-color: #666665;
+                            transform: translateX(-50%) rotate(30deg);
+                            
+                        }
+                        .second{
+                            // 这里是相对于 pointer-wrapper定位
+                            width: 5px;
+                            height: 150px;
+                            background-color: #de6857;
+                            transform: translateX(-50%);
+                            .pointer-mixin();
+                            .head{
+                                position: absolute;
+                                border: transparent 10px solid;
+                                border-top: #de6857 18px solid;
+                                top: 100%;
+                                left: 50%;
+                                transform: translateX(-50%);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
     }
+}
+
+
+
+
+
+
+
+
+// for Mixin---------------------------------
+.absCenter{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.pointer-mixin{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform-origin: 50% 0;
+    transition: all 1s ease;
+    z-index: -1;
 }

@@ -1,6 +1,13 @@
 module.exports = {
   publicPath: '/',
   pages: {
+    index: {
+      entry: 'src/entries/calendar.js',
+      template: 'public/calendar.html',
+      filename: 'index.html',
+      title: '日历',
+      chunks: ['chunk-vendors', 'chunk-common', 'calendar']
+    },
     calendar: {
       entry: 'src/entries/calendar.js',
       template: 'public/calendar.html',
